@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off" packages="main.conv">
+	<!-- Appender の設定 -->
+    <Appenders>
+    	<!-- ConsoleAppender 検証用
+		<Console name="ROOT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [ROOT] %-5level - %conv %n" />
+		</Console>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [CONSOLE] %-5level - %conv %n" />
+		</Console>
+		<Console name="ERR" target="SYSTEM_OUT" level="ERROR">
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [ERR] %-5level - %conv %n" />
+		</Console>
+		-->
+		<!-- FileAppender -->
+		<File name="ROOT-APL" fileName="log/apl.log">
+		<ThresholdFilter level="ERROR"/>
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [ROOT] %-5level - %conv %n" />
+		</File>
+		<File name="ROOT-ERR" fileName="log/err.log">
+		<ThresholdFilter level="ERROR"/>
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [ROOT] %-5level - %conv %n" />
+		</File>
+		<File name="APL" fileName="log/apl.log">
+		    <ThresholdFilter level="debug"/>
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] %c{1} [APL] %-5level - %conv %n" />
+		</File>
+		<File name="ERR" fileName="log/err.log">
+		<ThresholdFilter level="error"/>
+			<PatternLayout pattern="%d{YYYY/MM/dd HH:mm:ss.SSS} [%t] [ERR] %-5level - %conv %n" />
+		</File>
+    </Appenders>
+
+    <!-- Logger の設定 -->
+    <Loggers>
+        <Root level="ERROR">
+        	<AppenderRef ref="ROOT-APL"/>
+        	<AppenderRef ref="ROOT-ERR"/>
+        </Root>
+        <logger name="main" level="DEBUG" additivity="false">
+        	<AppenderRef ref="APL"/> <!-- コンバート失敗時のからログは、最初に定義したAPLにのみ出力される -->
+        	<AppenderRef ref="ERR"/>
+        </logger>
+        <logger name="ERR-LOGGER" level="ERROR" additivity="false">
+        	<AppenderRef ref="ROOT-APL"/>
+        	<AppenderRef ref="ROOT-ERR"/>
+        </logger>
+    </Loggers>
+</Configuration>
